@@ -9,12 +9,51 @@ public class Recursions {
         // System.out.println(sum);
         // int fact = FactorialOfNNumbers(5);
         // System.out.println(fact);
-        int[] arr = {1, 2, 3, 4, 5};
-        ReverseArray(arr);
+        // int[] arr = {1, 2, 3, 4, 5};
+        // int[] newArr = ReverseArray(arr, 0);
+        // for (int i = 0; i < newArr.length; i++) {
+        //     System.out.println(newArr[i]);
+        // }
+
+        // String pal = "raadbcdaar";
+        // boolean res = CheckPalindrome(pal, 0);
+        // System.out.println(res);
+        Fibbonacci(7, 0, 1);
     }
 
-    private static void ReverseArray(int[] arr) {
+    private static void Fibbonacci(int n, int prev, int next) {
+        if (n == 0) {
+            return;
+        } else {
+            System.err.println(prev);
+            Fibbonacci(n - 1, next, prev + next);
 
+        }
+    }
+
+    private static boolean CheckPalindrome(String pal, int i) {
+        int start = i, end = pal.length() - i - 1;
+        if (start > end) {
+            return true;
+        } else {
+            if (pal.charAt(start) == pal.charAt(end)) {
+                return CheckPalindrome(pal, i + 1);
+            } else {
+                return false;
+            }
+        }
+    }
+
+    private static int[] ReverseArray(int[] arr, int i) {
+
+        int start = i, end = arr.length - i - 1;
+        if (start > end) {
+            return arr;
+        }
+        int c = arr[start];
+        arr[start] = arr[end];
+        arr[end] = c;
+        return ReverseArray(arr, i + 1);
     }
 
     private static int FactorialOfNNumbers(int n) {
