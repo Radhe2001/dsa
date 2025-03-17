@@ -38,19 +38,32 @@ public class Array {
     }
 
     private static int longestSubarray(int[] arr, int k) {
-        int length = 0;
+        int n = arr.length; // size of the array.
 
-        for (int i = 0; i < arr.length; i++) {
-            int sum = 0;
-            for (int j = i; j < arr.length; j++) {
-                sum += arr[j];
-                if (sum == k && j - i + 1 > length) {
-                    length = j - i + 1;
-                }
+        HashMap<Long, Integer> preSumMap = new HashMap<>();
+        long sum = 0;
+        int maxLen = 0;
+        for (int i = 0; i < n; i++) {
+            sum += arr[i];
+            if (sum == k) {
+                maxLen = Math.max(maxLen, i + 1);
+            }
+
+            long rem = sum - k;
+
+            if (preSumMap.containsKey(rem)) {
+                int len = i - preSumMap.get(rem);
+                maxLen = Math.max(maxLen, len);
+
+            }
+
+            if (!preSumMap.containsKey(sum)) {
+                preSumMap.put(sum, i);
+
             }
         }
 
-        return length;
+        return maxLen;
     }
 
     private static int singleNumberAnother(int[] nums) {
