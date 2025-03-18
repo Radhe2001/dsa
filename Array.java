@@ -31,10 +31,51 @@ public class Array {
         // System.out.println(num);
         // int[] arr = {1, 0, 1, 1, 0, 1};
         // int num = findMaxConsecutiveOnes(arr);
-        int[] arr = {10, 5, 2, 7, 1, -10};
+        // int[] arr = {10, 5, 2, 7, 1, -10};
         // int num = singleNumber(arr);
-        int num = longestSubarray(arr, 15);
-        System.out.println(num);
+        // int num = longestSubarray(arr, 15);
+        // System.out.println(num);
+        int[] arr = {2, 5, 5, 11};
+        int[] temp = twoSum(arr, 10);
+        for (int i : temp) {
+            System.out.println(i);
+        }
+    }
+
+    private static int[] twoSum(int[] nums, int target) {
+        int[] arr = new int[2];
+
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int i : nums) {
+            map.putIfAbsent(i, 0);
+            map.replace(i, map.get(i) + 1);
+        }
+        Integer first = null, second = null;
+        for (int i : map.keySet()) {
+            int rem = target - i;
+            if (rem == i && map.get(i) > 1) {
+                first = second = i;
+                break;
+            } else if (map.get(rem) != null) {
+                first = i;
+                second = rem;
+                break;
+            }
+        }
+
+        for (int i = 0; i < nums.length; i++) {
+            if (first != null && nums[i] == first) {
+                arr[0] = i;
+                first = null;
+
+            } else if (second != null && nums[i] == second) {
+
+                arr[1] = i;
+                second = null;
+            }
+        }
+
+        return arr;
     }
 
     private static int longestSubarray(int[] arr, int k) {
