@@ -35,11 +35,109 @@ public class Array {
         // int num = singleNumber(arr);
         // int num = longestSubarray(arr, 15);
         // System.out.println(num);
-        int[] arr = {2, 5, 5, 11};
-        int[] temp = twoSum(arr, 10);
-        for (int i : temp) {
-            System.out.println(i);
+        // int[] arr = {2, 5, 5, 11};
+        // int[] temp = twoSum(arr, 10);
+        // int[] arr = {2, 0, 2, 1, 1, 0};
+        // sortColors(arr);
+        // for (int i : arr) {
+        //     System.out.println(i);
+        // }
+        int[] arr = {-2, 1, -3, 4, -1, 2, 1, -5, 4};
+        // int major = majorityElement(arr);
+        int maxSum = maxSubArray(arr);
+        System.out.println(maxSum);
+    }
+
+    private static int maxSubArray(int[] nums) {
+        // Integer max = null;
+        // for (int i = 0; i < nums.length; i++) {
+        //     int sum = 0;
+        //     for (int j = i; j < nums.length; j++) {
+        //         sum += nums[j];
+        //         if (max == null) {
+        //             max = sum;
+        //         }
+        //         if (max < sum) {
+        //             max = sum;
+        //         }
+        //     }
+        // }
+        // return max;
+
+        Integer max = Integer.MIN_VALUE, sum = 0;
+        for (int i = 0; i < nums.length; i++) {
+            sum += nums[i];
+            if (sum > max) {
+                max = sum;
+            }
+            if (sum < 0) {
+                sum = 0;
+            }
         }
+        return max;
+
+    }
+
+    private static int pairWithMaxSum(int arr[]) {
+
+        int max = 0;
+        for (int i = 0; i < arr.length - 1; i++) {
+            max = Math.max(arr[i] + arr[i + 1], max);
+
+        }
+        return max;
+    }
+
+    private static int majorityElement(int[] nums) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int i : nums) {
+            map.putIfAbsent(i, 0);
+            map.replace(i, map.get(i) + 1);
+        }
+
+        int maxKey = 0, maxValue = 0;
+        for (HashMap.Entry e : map.entrySet()) {
+            int val = (int) e.getValue(), key = (int) e.getKey();
+            if (val > maxValue) {
+                maxValue = val;
+                maxKey = key;
+            }
+        }
+        return maxKey;
+    }
+
+    private static void sortColors(int[] nums) {
+        // HashMap<Integer, Integer> map = new HashMap<>();
+        // for (int i = 0; i < nums.length; i++) {
+        //     int t = nums[i];
+        //     map.putIfAbsent(t, 0);
+        //     map.replace(t, map.get(t) + 1);
+        // }
+        // int i = 0;
+        // for (HashMap.Entry e : map.entrySet()) {
+        //     int key = (int) e.getKey(), len = (int) e.getValue();
+        //     for (int j = 0; j < len; j++) {
+        //         nums[i++] = key;
+        //     }
+        // }
+
+        int i = 0, mid = 0, j = nums.length - 1;
+        while (mid <= j) {
+            switch (nums[mid]) {
+                case 0 ->
+                    swap(nums, i++, mid++);
+                case 1 ->
+                    mid++;
+                case 2 ->
+                    swap(nums, mid, j--);
+            }
+        }
+    }
+
+    private static void swap(int[] arr, int i, int j) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
     }
 
     private static int[] twoSum(int[] nums, int target) {
