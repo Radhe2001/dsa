@@ -42,10 +42,83 @@ public class Array {
         // for (int i : arr) {
         //     System.out.println(i);
         // }
-        int[] arr = {-2, 1, -3, 4, -1, 2, 1, -5, 4};
+        int[] arr = {3, 1, -2, -5, 2, -4};
         // int major = majorityElement(arr);
-        int maxSum = maxSubArray(arr);
-        System.out.println(maxSum);
+        // int maxSum = maxSubArray(arr);
+        // int max = maxProfit(arr);
+
+        // System.out.println(max);
+        int[] nums = rearrangeArray(arr);
+        for (int i : nums) {
+            System.out.print(i + " , ");
+        }
+    }
+
+    private static int[] rearrangeArray(int[] nums) {
+        // TODO: Needs to be optimized
+
+        // int[] pos = new int[nums.length / 2];
+        // int[] neg = new int[nums.length / 2];
+        // int i1 = 0, i2 = 0;
+        // for (int i : nums) {
+        //     if (i < 0) {
+        //         neg[i2++] = i;
+        //     } else {
+        //         pos[i1++] = i;
+        //     }
+        // }
+        // for (int i = 0; i < nums.length / 2; i++) {
+        //     nums[i * 2] = pos[i];
+        //     nums[i * 2 + 1] = neg[i];
+        // }
+        // return nums;
+        int[] temp = new int[nums.length];
+        int pos = 0, neg = 1;
+        for (int i : nums) {
+            if (i < 0) {
+                temp[neg] = i;
+                neg += 2;
+            } else {
+                temp[pos] = i;
+                pos += 2;
+            }
+        }
+
+        return temp;
+    }
+
+    public static int maxProfit(int[] prices) {
+        // FIXME: Works fine but time limit exceeds
+
+        // int t = Integer.MIN_VALUE;
+        // int max = t;
+        // for (int i = 0; i < prices.length - 1; i++) {
+        //     if (prices[i] < prices[i + 1]) {
+        //         Integer temp = t, low = t;
+        //         boolean change = false;
+        //         for (int j = i + 1; j < prices.length; j++) {
+        //             int diff = prices[j] - prices[i];
+        //             if (diff > temp) {
+        //                 temp = diff;
+        //                 change = true;
+        //             }
+        //         }
+        //         if (max < temp) {
+        //             max = temp;
+        //         }
+        //         if (!change) {
+        //             break;
+        //         }
+        //     }
+        // }
+        // return max == t ? 0 : max;
+        int maxPro = 0;
+        int minPrice = Integer.MAX_VALUE;
+        for (int i = 0; i < prices.length; i++) {
+            minPrice = Math.min(minPrice, prices[i]);
+            maxPro = Math.max(maxPro, prices[i] - minPrice);
+        }
+        return maxPro;
     }
 
     private static int maxSubArray(int[] nums) {
