@@ -42,16 +42,92 @@ public class Array {
         // for (int i : arr) {
         //     System.out.println(i);
         // }
-        int[] arr = {3, 1, -2, -5, 2, -4};
+        // int[] arr = {3, 1, -2, -5, 2, -4};
         // int major = majorityElement(arr);
         // int maxSum = maxSubArray(arr);
         // int max = maxProfit(arr);
-
         // System.out.println(max);
-        int[] nums = rearrangeArray(arr);
-        for (int i : nums) {
-            System.out.print(i + " , ");
+        // int[] arr = {16, 17, 4, 3, 5, 2};
+        // ArrayList<Integer> nums = leaders(arr);
+        // for (int i : nums) {
+        //     System.out.print(i + " , ");
+        // }
+        int[][] arr = {{0, 1, 2, 0}, {3, 4, 5, 2}, {1, 3, 1, 5}};
+
+        setZeroes(arr);
+        for (int[] a : arr) {
+            for (int i : a) {
+                System.out.print(i + ",");
+            }
+            System.out.println("");
         }
+    }
+
+    private static void setZeroes(int[][] matrix) {
+        HashMap<Integer, Integer> mapx = new HashMap<>();
+        HashMap<Integer, Integer> mapy = new HashMap<>();
+
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                if (matrix[i][j] == 0) {
+                    mapx.putIfAbsent(i, 1);
+                    mapy.putIfAbsent(j, 1);
+                }
+            }
+        }
+        for (int key : mapx.keySet()) {
+            for (int i = 0; i < matrix[key].length; i++) {
+                matrix[key][i] = 0;
+            }
+        }
+        for (int key : mapy.keySet()) {
+            for (int i = 0; i < matrix.length; i++) {
+                matrix[i][key] = 0;
+            }
+        }
+        System.out.println(mapx);
+        System.err.println(mapy);
+    }
+
+    private static int longestConsecutive(int[] nums) {
+        MergeSort(nums, 0, nums.length - 1);
+        int max = 0, temp = 0;
+
+        for (int i = 0; i < nums.length - 1; i++) {
+            if (nums[i + 1] - nums[i] == 1) {
+                temp++;
+                if (temp > max) {
+                    max = temp;
+                }
+            } else if (nums[i + 1] - nums[i] == 0) {
+            } else {
+                temp = 0;
+            }
+        }
+        return max + 1;
+    }
+
+    static ArrayList<Integer> leaders(int arr[]) {
+        int max = arr[arr.length - 1];
+        ArrayList<Integer> nums = new ArrayList<>();
+        for (int i = arr.length - 1; i >= 0; i--) {
+            if (arr[i] >= max) {
+                nums.add(arr[i]);
+                max = arr[i];
+            }
+        }
+        int t = nums.size() - 1;
+        int[] temp = new int[t + 1];
+        for (int i = 0; i <= t; i++) {
+            temp[t - i] = nums.get(i);
+        }
+
+        ArrayList<Integer> x = new ArrayList<>();
+        for (int i = 0; i < temp.length; i++) {
+            x.add(temp[i]);
+        }
+
+        return x;
     }
 
     private static int[] rearrangeArray(int[] nums) {
