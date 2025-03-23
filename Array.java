@@ -52,15 +52,31 @@ public class Array {
         // for (int i : nums) {
         //     System.out.print(i + " , ");
         // }
-        int[][] arr = {{0, 1, 2, 0}, {3, 4, 5, 2}, {1, 3, 1, 5}};
+        // setZeroes(arr);
+        // for (int[] a : arr) {
+        //     for (int i : a) {
+        //         System.out.print(i + ",");
+        //     }
+        //     System.out.println("");
+        // }
+        int[] arr = {1, 2, 3};
 
-        setZeroes(arr);
-        for (int[] a : arr) {
-            for (int i : a) {
-                System.out.print(i + ",");
+        int num = subarraySum(arr, 3);
+        System.out.println(num);
+    }
+
+    private static int subarraySum(int[] nums, int k) {
+        int count = 0;
+        for (int i = 0; i < nums.length; i++) {
+            int sum = 0;
+            for (int j = i; j < nums.length; j++) {
+                sum += nums[j];
+                if (sum == k) {
+                    count++;
+                }
             }
-            System.out.println("");
         }
+        return count;
     }
 
     private static void setZeroes(int[][] matrix) {
@@ -85,8 +101,7 @@ public class Array {
                 matrix[i][key] = 0;
             }
         }
-        System.out.println(mapx);
-        System.err.println(mapy);
+
     }
 
     private static int longestConsecutive(int[] nums) {
